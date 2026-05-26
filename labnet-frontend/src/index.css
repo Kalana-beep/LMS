@@ -1,0 +1,236 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Inter', sans-serif;
+    transition: background 0.5s ease, color 0.3s ease;
+    min-height: 100vh;
+  }
+
+  /* Colorful default theme */
+  body.default-bg {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    background-attachment: fixed;
+    color: #1e1b4b;
+  }
+  
+  body.default-bg::before {
+    content: '';
+    position: fixed;
+    top: -20%;
+    left: -10%;
+    width: 70%;
+    height: 70%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body.default-bg::after {
+    content: '';
+    position: fixed;
+    bottom: -10%;
+    right: -15%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(255, 215, 0, 0.2) 0%, rgba(255, 215, 0, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Dark theme */
+  body.modern-bg {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #2e1065 100%);
+    background-attachment: fixed;
+    color: #f1f5f9;
+  }
+
+  body.modern-bg::before {
+    content: '';
+    position: fixed;
+    top: -10%;
+    left: -10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(139, 92, 246, 0.3) 0%, rgba(139, 92, 246, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  body.modern-bg::after {
+    content: '';
+    position: fixed;
+    bottom: -10%;
+    right: -10%;
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(236, 72, 153, 0.2) 0%, rgba(236, 72, 153, 0) 70%);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+@layer components {
+  .glass-card {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(12px);
+    border-radius: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  }
+  body.modern-bg .glass-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  }
+  .glass-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+    transition: all 0.3s ease;
+    border: none;
+    color: white;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  }
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(139, 92, 246, 0.5);
+  }
+  .btn-secondary {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    color: #1e1b4b;
+  }
+  body.modern-bg .btn-secondary {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f1f5f9;
+  }
+  .btn-secondary:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.3);
+  }
+  body.modern-bg .btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+  .glass-input {
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 0.75rem;
+    padding: 0.5rem 1rem;
+    transition: all 0.3s;
+    color: #1e1b4b;
+  }
+  body.modern-bg .glass-input {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #f1f5f9;
+  }
+  .glass-input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+    background: rgba(255, 255, 255, 0.3);
+  }
+  body.modern-bg .glass-input:focus {
+    background: rgba(255, 255, 255, 0.15);
+  }
+  /* Text color overrides */
+  .text-gray-300, .text-gray-400 {
+    color: rgba(255, 255, 255, 0.8) !important;
+  }
+  body.default-bg .text-gray-300,
+  body.default-bg .text-gray-400 {
+    color: rgba(30, 27, 75, 0.8) !important;
+  }
+}
+
+/* ========== FIXED IMAGE RULES ========== */
+/* Base image behavior */
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Course card images – fixed aspect ratio, cover fill */
+.course-card-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 1rem 1rem 0 0;
+}
+
+/* Course detail banner image */
+.course-banner-image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: 1rem;
+}
+
+/* Profile image – circular, perfect fit */
+.profile-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Small profile image (navbar) */
+.profile-image-sm {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Teacher card image */
+.teacher-image {
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .course-card-image {
+    height: 160px;
+  }
+  .course-banner-image {
+    height: 200px;
+  }
+  .profile-image {
+    width: 80px;
+    height: 80px;
+  }
+  .teacher-image {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* Ensure any image container doesn't cause overflow */
+.image-container {
+  overflow: hidden;
+  border-radius: inherit;
+}
