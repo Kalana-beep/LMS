@@ -3,34 +3,14 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
-
-// CORS – allow Vercel frontend
-const allowedOrigins = [
-  'https://lms-fawn-mu.vercel.app',
-  'http://localhost:5173',
-  'http://localhost:5174',
-];
-
+const allowedOrigins = ['https://lms-fawn-mu.vercel.app', 'http://localhost:5173'];
 app.use(cors({
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
-      callback(null, true);
-    } else {
-      callback(new Error('CORS not allowed'));
-    }
-  },
-  credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  origin: (origin, cb) => { if (!origin || allowedOrigins.includes(origin)) cb(null, true); else cb(new Error('CORS')); },
+  credentials: true
 }));
-
 app.options('*', cors());
 app.use(express.json());
-
-mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.log(err));
-
+mongoose.connect(process.env.MONGO_URI).then(() => console.log('MongoDB connected'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 app.use('/api/courses', require('./routes/courseRoutes'));
@@ -40,8 +20,6 @@ app.use('/api/subscription', require('./routes/subscriptionRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/teacher', require('./routes/teacherRoutes'));
 app.use('/api/contact', require('./routes/contactRoutes'));
-
-app.get('/', (req, res) => res.send('LabNet API Running'));
-
+app.get('/', (req, res) => res.send('LabNet API'));
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+app.listen(PORT, () => console.log(`Server on port ${PORT}`));
