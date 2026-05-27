@@ -4,19 +4,17 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
 
-// ========== CORS: Allow all localhost origins during development ==========
+// ========== CORS – Allow Vercel frontend and local development ==========
 const allowedOrigins = [
+  'https://lms-fawn-mu.vercel.app',   // your Vercel frontend
   'http://localhost:5173',
   'http://localhost:5174',
-  'http://localhost:5175',
-  'http://127.0.0.1:5173',
-  'http://127.0.0.1:5174',
-  'http://localhost:3000',
+  'http://127.0.0.1:5173'
 ];
 
 app.use(cors({
   origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or Postman)
+    // Allow requests with no origin (like mobile apps or curl)
     if (!origin) return callback(null, true);
     if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV !== 'production') {
       callback(null, true);
@@ -24,12 +22,14 @@ app.use(cors({
       callback(new Error('Not allowed by CORS'));
     }
   },
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
 app.use(express.json());
 
-// Connect to MongoDB
+// MongoDB connection
 mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
   .catch(err => console.log(err));
@@ -47,5 +47,6 @@ app.use('/api/contact', require('./routes/contactRoutes'));
 
 app.get('/', (req, res) => res.send('LabNet API Running'));
 
+// ========== Use Railway's dynamic PORT ==========
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
